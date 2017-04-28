@@ -6,17 +6,15 @@ public class ModifyAnimParam : StateMachineBehaviour
     public enum Timing { OnEnter, OnExit }
     public enum Modification { Set, Add, Subtract, Multiply, Divide, Toggle, Reset }
     public enum Type { Float, Int, Bool, Trigger }
-    
+
+
+    [SerializeField]
+    string inChild;
     [SerializeField]
     Timing triggerEvent;
 
     [Space]
-
-    [SerializeField]
-    string inChild;
-
-    [Space]
-
+    
     [SerializeField]
     string paramName;
     [SerializeField]
@@ -53,7 +51,10 @@ public class ModifyAnimParam : StateMachineBehaviour
         if (triggerEvent != Timing.OnExit)
             return;
 
-        Modify(animator);
+        if (inChild == "")
+            Modify(animator);
+        else
+            Modify(animator.transform.FindChild(inChild).GetComponent<Animator>());
     }
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
