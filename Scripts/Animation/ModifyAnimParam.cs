@@ -69,9 +69,6 @@ public class ModifyAnimParam : StateMachineBehaviour
 
     void Modify(Animator animator)
     {
-        if (animator == null)
-            Debug.LogError("No animator found in target child");
-
         int id = Animator.StringToHash(paramName);
 
         switch (paramType)
