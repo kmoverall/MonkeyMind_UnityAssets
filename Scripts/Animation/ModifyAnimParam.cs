@@ -1,28 +1,45 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ModifyAnimParam : StateMachineBehaviour {
-
-
+public class ModifyAnimParam : StateMachineBehaviour 
+{
     public enum Timing { OnEnter, OnExit }
-    public enum Modification { Increment, Set }
-
+    public enum Modification { Set, Add, Subtract, Multiply, Divide, Toggle, Reset }
+    public enum Type { Float, Int, Bool, Trigger }
+    
     [SerializeField]
     Timing triggerEvent;
+
+    [Space]
+
     [SerializeField]
-    Modification modFunction;
+    string inChild;
+
+    [Space]
+
     [SerializeField]
     string paramName;
     [SerializeField]
-    int value;
+    Type paramType;
+    [SerializeField]
+    Modification modifier;
+    [SerializeField]
+    float floatValue;
+    [SerializeField]
+    int intValue;
+    [SerializeField]
+    bool boolValue;
 
-	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
+    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
     {
         if (triggerEvent != Timing.OnEnter)
             return;
 
-        Modify(animator);
+        if (inChild == "")
+            Modify(animator);
+        else
+            Modify(animator.transform.FindChild(inChild).GetComponent<Animator>());
     }
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -51,9 +68,78 @@ public class ModifyAnimParam : StateMachineBehaviour {
 
     void Modify(Animator animator)
     {
-        if (modFunction == Modification.Increment)
-            animator.SetInteger(paramName, animator.GetInteger(paramName) + value);
-        if (modFunction == Modification.Set)
-            animator.SetInteger(paramName, value);
+        if (animator == null)
+            Debug.LogError("No animator found in target child");
+
+        int id = Animator.StringToHash(paramName);
+
+        switch (paramType)
+        {
+            case Type.Float:
+                switch (modifier)
+                {
+                    case Modification.Set:
+                        animator.SetFloat(id, floatValue);
+                        break;
+                    case Modification.Add:
+                        animator.SetFloat(id, animator.GetFloat(id) + floatValue);
+                        break;
+                    case Modification.Subtract:
+                        animator.SetFloat(id, animator.GetFloat(id) - floatValue);
+                        break;
+                    case Modification.Multiply:
+                        animator.SetFloat(id, animator.GetFloat(id) * floatValue);
+                        break;
+                    case Modification.Divide:
+                        animator.SetFloat(id, animator.GetFloat(id) / floatValue);
+                        break;
+                }
+                break;
+
+            case Type.Int:
+                switch (modifier)
+                {
+                    case Modification.Set:
+                        animator.SetInteger(id, intValue);
+                        break;
+                    case Modification.Add:
+                        animator.SetInteger(id, animator.GetInteger(id) + intValue);
+                        break;
+                    case Modification.Subtract:
+                        animator.SetInteger(id, animator.GetInteger(id) - intValue);
+                        break;
+                    case Modification.Multiply:
+                        animator.SetInteger(id, animator.GetInteger(id) * intValue);
+                        break;
+                    case Modification.Divide:
+                        animator.SetInteger(id, animator.GetInteger(id) / intValue);
+                        break;
+                }
+                break;
+                
+            case Type.Bool:
+                switch (modifier)
+                {
+                    case Modification.Set:
+                        animator.SetBool(id, boolValue);
+                        break;
+                    case Modification.Toggle:
+                        animator.SetBool(id, !animator.GetBool(id));
+                        break;
+                }
+                break;
+
+            case Type.Trigger:
+                switch (modifier)
+                {
+                    case Modification.Set:
+                        animator.SetTrigger(id);
+                        break;
+                    case Modification.Reset:
+                        animator.ResetTrigger(id);
+                        break;
+                }
+                break;
+        }
     }
 }
