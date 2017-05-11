@@ -1,4 +1,6 @@
-﻿Shader "Debug/UVs"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Debug/UVs"
 {
 	Properties
 	{
@@ -31,7 +33,7 @@
 			v2f vert (appdata v)
 			{
 				v2f o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv2 = v.uv2;
 				return o;
 			}

@@ -1,4 +1,6 @@
-﻿Shader "Debug/Normals"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Debug/Normals"
 {
 	Properties
 	{
@@ -31,7 +33,7 @@
 			v2f vert (appdata v)
 			{
 				v2f o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.normal = v.normal;
 				return o;
 			}
