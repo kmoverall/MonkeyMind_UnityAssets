@@ -4,10 +4,11 @@ using System.Collections;
 public class ModifyAnimParam : StateMachineBehaviour 
 {
     public enum Timing { OnEnter, OnExit }
-    public enum Modification { Set, Add, Subtract, Multiply, Divide, Toggle, Reset }
+    public enum Modification { Set, Add, Subtract, Multiply, Divide, Toggle, Reset, Modulus }
     public enum Type { Float, Int, Bool, Trigger }
 
-
+    [SerializeField]
+    bool isInChild;
     [SerializeField]
     string inChild;
     [SerializeField]
@@ -34,7 +35,7 @@ public class ModifyAnimParam : StateMachineBehaviour
         if (triggerEvent != Timing.OnEnter)
             return;
 
-        if (inChild == "")
+        if (!isInChild)
             Modify(animator);
         else
             Modify(animator.transform.FindChild(inChild).GetComponent<Animator>());
@@ -51,7 +52,7 @@ public class ModifyAnimParam : StateMachineBehaviour
         if (triggerEvent != Timing.OnExit)
             return;
 
-        if (inChild == "")
+        if (!isInChild)
             Modify(animator);
         else
             Modify(animator.transform.FindChild(inChild).GetComponent<Animator>());
@@ -91,6 +92,9 @@ public class ModifyAnimParam : StateMachineBehaviour
                     case Modification.Divide:
                         animator.SetFloat(id, animator.GetFloat(id) / floatValue);
                         break;
+                    case Modification.Modulus:
+                        animator.SetFloat(id, animator.GetFloat(id) % floatValue);
+                        break;
                 }
                 break;
 
@@ -111,6 +115,9 @@ public class ModifyAnimParam : StateMachineBehaviour
                         break;
                     case Modification.Divide:
                         animator.SetInteger(id, animator.GetInteger(id) / intValue);
+                        break;
+                    case Modification.Modulus:
+                        animator.SetInteger(id, animator.GetInteger(id) % intValue);
                         break;
                 }
                 break;
