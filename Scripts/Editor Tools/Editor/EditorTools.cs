@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 //http://answers.unity3d.com/questions/1073094/custom-inspector-layer-mask-variable.html
-public class EditorTools {
+public static class EditorTools {
 
     static List<string> layers;
     static string[] layerNames;
