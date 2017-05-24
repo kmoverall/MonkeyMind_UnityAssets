@@ -38,7 +38,7 @@ public class ModifyAnimParam : StateMachineBehaviour
         if (!isInChild)
             Modify(animator);
         else
-            Modify(animator.transform.FindChild(inChild).GetComponent<Animator>());
+            Modify(animator.transform.Find(inChild).GetComponent<Animator>());
     }
 
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -55,7 +55,7 @@ public class ModifyAnimParam : StateMachineBehaviour
         if (!isInChild)
             Modify(animator);
         else
-            Modify(animator.transform.FindChild(inChild).GetComponent<Animator>());
+            Modify(animator.transform.Find(inChild).GetComponent<Animator>());
     }
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
