@@ -33,6 +33,7 @@ sysinfo.txt
 
 *.exe
 *.zip
+*.txt.meta
 
 # =========================
 # Operating System Files

@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class #SCRIPTNAME# {
 
-	public #SCRIPTNAME# () {
-	
-	}
-	
+    public #SCRIPTNAME# () {
+    
+    }
+    
 }

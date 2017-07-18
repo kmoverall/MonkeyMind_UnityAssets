@@ -13,53 +13,53 @@ using UnityEngine.Assertions;
 
 public class #SCRIPTNAME# : EditorWindow
 {
-	[MenuItem("Window/#SCRIPTNAME# %l")]
-	public static void ShowEditor()
-	{
-		//create the editor window
-		#SCRIPTNAME# editor = EditorWindow.GetWindow<#SCRIPTNAME#>();
-		
-		//the editor window must have a min size
-		editor.titleContent = new GUIContent("#SCRIPTNAME#");
-		editor.minSize = new Vector2 (600, 400);
-		
-		//call the init method after we create our window
-		editor.Init();
-	}
+    [MenuItem("Window/#SCRIPTNAME# %l")]
+    public static void ShowEditor()
+    {
+        //create the editor window
+        #SCRIPTNAME# editor = EditorWindow.GetWindow<#SCRIPTNAME#>();
+        
+        //the editor window must have a min size
+        editor.titleContent = new GUIContent("#SCRIPTNAME#");
+        editor.minSize = new Vector2 (600, 400);
+        
+        //call the init method after we create our window
+        editor.Init();
+    }
 
-	private void Init()
-	{
+    private void Init()
+    {
 
-	}
+    }
 
-	private void OnGUI()
-	{
+    private void OnGUI()
+    {
 
-		
-	}
-	
-	public void PlaymodeChanged()
-	{
-		Repaint();
-	}
+        
+    }
+    
+    public void PlaymodeChanged()
+    {
+        Repaint();
+    }
 
-	public void OnLostFocus ()
-	{
-		Repaint();
-	}
+    public void OnLostFocus ()
+    {
+        Repaint();
+    }
 
-	public void OnFocus()
-	{
-		Repaint();
-	}
+    public void OnFocus()
+    {
+        Repaint();
+    }
 
-	public void OnProjectChange ()
-	{
-		Repaint();
-	}
+    public void OnProjectChange ()
+    {
+        Repaint();
+    }
 
-	public void OnSelectionChange ()
-	{
-		Repaint();
-	}
+    public void OnSelectionChange ()
+    {
+        Repaint();
+    }
 }
